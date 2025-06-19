@@ -1,0 +1,5 @@
+- Catalogar distintos tipos de publicaciones(libros, revistas, DVDs...)
+- Gestionar socios de la biblioteca
+- Registrar préstamos y devoluciones
+- Guardar y cargar todo el estado en ficheros
+-? Sacar informes y hacer pruebas automáticas
