@@ -3,10 +3,10 @@ package com.biblioteca.model;
 import java.time.LocalDate;
 
 public abstract class Publicacion {
-    private String titulo;
-    private int ejemplares;
-    private String identificador;
-    private LocalDate fechaPublicacion;
+    public String titulo;
+    public int ejemplares;
+    public String identificador;
+    public LocalDate fechaPublicacion;
 
     public Publicacion(String t, int ejem, String id, LocalDate fP) {
         this.titulo = t;
