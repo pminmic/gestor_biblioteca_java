@@ -1,14 +1,14 @@
-package com.biblioteca.model;
+package biblioteca.model;
 
 import java.time.LocalDate;
 
-public abstract class Publicacion {
-    public String titulo;
-    public int ejemplares;
-    public String identificador;
-    public LocalDate fechaPublicacion;
+public abstract class Documento {
+    private String titulo;
+    private int ejemplares;
+    private String identificador;
+    private LocalDate fechaPublicacion;
 
-    public Publicacion(String t, int ejem, String id, LocalDate fP) {
+    public Documento(String t, int ejem, String id, LocalDate fP) {
         this.titulo = t;
         this.ejemplares = ejem;
         this.identificador = id;

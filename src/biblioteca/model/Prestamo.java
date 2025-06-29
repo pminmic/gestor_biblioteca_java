@@ -1,4 +1,4 @@
-package com.biblioteca.model;
+package biblioteca.model;
 
 import java.time.LocalDate;
 
@@ -9,19 +9,19 @@ public class Prestamo {
 
     private LocalDate fechaPrestamo;
     private LocalDate fechaRetorno;
-    private Publicacion prestamo;
+    private Documento documento;
     private Socio socio;
 
-    public Prestamo(LocalDate fP, Publicacion p, Socio s){
+    public Prestamo(LocalDate fP, Documento d, Socio s){
         this.fechaPrestamo = fP;
-        this.prestamo = p;
+        this.documento = d;
         this.socio = s;
         this.fechaRetorno = fP.plusDays(TIEMPO_PRESTAMO);
     }
 
-    public Publicacion getPrestamo() {
+    public Documento getDocumento() {
         //Recordar usar el método toString
-        return this.prestamo;
+        return this.documento;
     }
 
     public LocalDate getFechaPrestamo() {
