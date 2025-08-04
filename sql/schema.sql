@@ -17,7 +17,7 @@ CREATE TABLE socios (
     nombre VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     telefono VARCHAR(25) NOT NULL UNIQUE,
-    fecha_registro DATE NOT NULL
+    fecha_registro DATE NOT NULL DEFAULT(CURRENT_DATE)
 );
 
 CREATE TABLE prestamos (
