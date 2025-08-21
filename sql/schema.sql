@@ -24,7 +24,7 @@ CREATE TABLE prestamos (
     prestamo_id SERIAL,
     identificador VARCHAR(50) NOT NULL,
     socio_id BIGINT(20) UNSIGNED NOT NULL,
-    fecha_prestamo DATE NOT NULL,
+    fecha_prestamo DATE NOT NULL DEFAULT(CURRENT_DATE),
     fecha_retorno DATE NOT NULL,
     PRIMARY KEY (identificador, socio_id, fecha_prestamo),
     FOREIGN KEY (identificador) REFERENCES documentos(identificador),
