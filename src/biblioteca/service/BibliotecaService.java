@@ -1,5 +1,8 @@
 package biblioteca.service;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class BibliotecaService {
 
     // Hacer un método para verificar el formateo de un email para antes de la creación de un socio
@@ -31,6 +34,55 @@ public class BibliotecaService {
         // comprobar en a db si es socio
         
         return res;
+    }
+
+    public static int validarIntervalo(Scanner terminal, int ini, int fin) {
+        int opcion = 0;
+        boolean correct = false;
+        
+        while (!correct) {
+            try {
+                opcion = terminal.nextInt();
+                if (opcion >= ini && opcion <= fin) {
+                    correct = true;
+                }
+                else {
+                    System.out.println("Introduce un número valido, porfavor.");
+                }
+            }
+            catch(InputMismatchException e) {
+                System.out.println("Introduce una opción del menú, porfavor.");
+            }
+        }
+        
+        
+        return opcion;
+    }
+
+    public static int validarIntervalo(Scanner terminal, int ini, int fin, int secret) {
+        int opcion = 0;
+        boolean correct = false;
+        
+        while (!correct) {
+            try {
+                opcion = terminal.nextInt();
+                if (opcion >= ini && opcion <= fin) {
+                    correct = true;
+                }
+                else if (secret == opcion){
+                    correct = true;
+                }
+                else {
+                    System.out.println("Introduce un número valido, porfavor.");
+                }
+            }
+            catch(InputMismatchException e) {
+                System.out.println("Introduce una opción del menú, porfavor.");
+            }
+        }
+        
+        
+        return opcion;
     }
 
 }

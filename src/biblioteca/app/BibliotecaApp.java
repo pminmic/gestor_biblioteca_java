@@ -1,16 +1,16 @@
 package biblioteca.app;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import biblioteca.service.BibliotecaService;
 import biblioteca.dao.SocioDao;
 
 public class BibliotecaApp {
+
+    public static Scanner terminal = new Scanner(System.in);
     public static void main(String[] args) {
         // Inicializa la aplicación de biblioteca
         System.out.println("\nBienvenido a la Biblioteca!");
         System.out.println("\n¿Cuál es tu email?");
-        Scanner terminal = new Scanner(System.in);
         boolean correct = false;
         while (!correct){
             String email = terminal.nextLine();
@@ -58,13 +58,9 @@ public class BibliotecaApp {
         // bibliotecaService.mostrarLibros();
         
         // O cualquier otra funcionalidad que desees implementar
-
-        terminal.close();
     }
 
     private static void mainMenu() {
-
-        Scanner terminal = new Scanner(System.in);
         
         System.out.println("\n¿Qué operación desea realizar?");
         System.out.println("1. Buscar un documento");
@@ -72,25 +68,8 @@ public class BibliotecaApp {
         System.out.println("3. Datos de socio");
         System.out.println("4. Salir");
         
-        boolean correct = false;
-        int option = 0;
-        while(!correct){
-            try{
-                option = terminal.nextInt();
-                if (option >= 1 && option <= 4) {
-                    correct = true;
-                }
-                else {
-                    System.out.println("\nEsa opción no existe en el menú, vuelve a introducir un número.");
-                }
-            }
-            catch(InputMismatchException e){
-                System.out.println("\nPorfavor introduce el tipo de valor correcto.");
-                terminal.nextLine();
-            }
-            
-        }
-
+        
+        int option = BibliotecaService.validarIntervalo(terminal, 1, 4, 33);
         switch (option) {
             case 1:
                 buscarDocumento();
@@ -103,15 +82,58 @@ public class BibliotecaApp {
                 break;
             case 4:
                 System.out.println("\nHasta la próxima!!!\n");
+                terminal.close();
+                break;
+            case 33:
+                insertarDocumento();
                 break;
         }
-
-        terminal.close();
     }
 
     private static void buscarDocumento() {
         // Buscar un documento a partir de su título, autor o id. Después dar la opción de prestar.
-        mainMenu();
+        System.out.println("\n¿Que tipo de documento quieres buscar?");
+        System.out.println("1. Libro");
+        System.out.println("2. Revista");
+        System.out.println("3. Dvd");
+        System.out.println("4. Cancelar");
+
+        int opcion = BibliotecaService.validarIntervalo(terminal, 1, 4);
+        
+        String tipo_doc = "";
+        switch(opcion) {
+           case 1:
+               tipo_doc = "libro";
+               break;
+           case 2:
+               tipo_doc = "revista";
+               break;
+           case 3:
+               tipo_doc = "dvd";
+               break;
+           case 4:
+               mainMenu();
+               break;
+        }
+        
+        System.out.println("\nPerfecto, que tipo de búsqueda quieres realizar?");
+        if (tipo_doc == "libro") {
+            System.out.println("1. Por ISBN");
+            System.out.println("2. Por autor");
+            System.out.println("3. Por editorial");
+        }
+        else if (tipo_doc == "revista") {
+            System.out.println("1. Por ISSN");
+            System.out.println("2. Por autor");
+            System.out.println("3. Por editorial");
+        }
+        else {
+            System.out.println("1. Por EAN");
+            System.out.println("2. Por director");
+            System.out.println("3. Por productora");
+        }
+        System.out.println("4. Por nombre");
+
     }
 
     private static void comprobarPrestamos() {
@@ -124,4 +146,35 @@ public class BibliotecaApp {
         mainMenu();
     }
     
+    private static void insertarDocumento() {
+        System.out.println("\nLOGON:");
+        String pass = terminal.nextLine();
+
+        if (!pass.equals("JOSHUA")) {
+            System.out.println("\nLo siento, no tienes permiso para acceder.");
+            mainMenu();
+        }
+    
+    
+        System.out.println("\nBIENVENIDO AL MENÚ DE SUPERUSUARIO, ¿que acción desea realizar?");
+        System.out.println("1. Añadir un documento");
+        System.out.println("2. Eliminar un documento");
+        System.out.println("3. Eliminar un usuario");
+        System.out.println("4. Salir al menú normal");
+        int opcion = BibliotecaService.validarIntervalo(terminal, 1, 4);
+        switch(opcion){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                mainMenu();
+                break;
+        }
+    
+
+
+    }
 }
