@@ -2,9 +2,12 @@ package biblioteca.app;
 import java.util.Scanner;
 
 import biblioteca.service.BibliotecaService;
+import biblioteca.dao.DocumentoDao;
 import biblioteca.dao.SocioDao;
 
 public class BibliotecaApp {
+
+    private static String pass = "";
 
     public static Scanner terminal = new Scanner(System.in);
     public static void main(String[] args) {
@@ -85,7 +88,7 @@ public class BibliotecaApp {
                 terminal.close();
                 break;
             case 33:
-                insertarDocumento();
+                superusuario();
                 break;
         }
     }
@@ -146,33 +149,54 @@ public class BibliotecaApp {
         mainMenu();
     }
     
-    private static void insertarDocumento() {
-        System.out.println("\nLOGON:");
-        String pass = terminal.nextLine();
+    private static void superusuario() {    
 
-        if (!pass.equals("JOSHUA")) {
-            System.out.println("\nLo siento, no tienes permiso para acceder.");
-            mainMenu();
+        if (pass.equals("")){
+            System.out.println("\nLOGON:");
+            pass = terminal.nextLine();
+            
         }
-    
-    
-        System.out.println("\nBIENVENIDO AL MENÚ DE SUPERUSUARIO, ¿que acción desea realizar?");
-        System.out.println("1. Añadir un documento");
-        System.out.println("2. Eliminar un documento");
-        System.out.println("3. Eliminar un usuario");
-        System.out.println("4. Salir al menú normal");
-        int opcion = BibliotecaService.validarIntervalo(terminal, 1, 4);
-        switch(opcion){
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
+        int num = 0;
+        if (pass.equals("JOSHUA")) num = 1;
+        switch(num){
+            case 0:
+                System.out.println("\nLo siento, no tienes permiso para acceder.");
                 mainMenu();
                 break;
+            case 1:
+                System.out.println("\nBIENVENIDO AL MENÚ DE SUPERUSUARIO, ¿que acción desea realizar?");
+                System.out.println("1. Añadir un documento");
+                System.out.println("2. Eliminar un documento");
+                System.out.println("3. Eliminar un usuario");
+                System.out.println("4. Salir al menú normal");
+                int opcion = BibliotecaService.validarIntervalo(terminal, 1, 4);
+
+                switch(opcion){
+                    case 1:
+                        DocumentoDao documentoDao = new DocumentoDao();
+                        if (documentoDao.insertarDocumento(terminal)) {
+                            System.out.println("Perfecto! El documento ha sido añadido.");
+                        }
+                        else {
+                            System.out.println("Parece que ha habido un error");
+                        }
+                        superusuario();
+                        break;
+                    case 2:
+                        superusuario();
+                        break;
+                    case 3:
+                        superusuario();
+                        break;
+                    case 4:
+                        pass = "";
+                        mainMenu();
+                        break;
+                }
         }
+    
+    
+        
     
 
 
