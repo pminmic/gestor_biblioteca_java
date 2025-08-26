@@ -153,37 +153,42 @@ public class DocumentoDao {
             System.err.println("Ha habido un problema al connectarse a la base de datos.");
         }
         
-        System.out.println("\n¿Estas seguro que lo quieres eliminar? (s/n)\n");
-        if (tipo_doc.equals("libro")) {
-                Libro libro = new Libro(titulo, ejemplares, id, fecha_publi, editorial, autor);
-                System.out.println(libro.toString());
-        }
-        else if(tipo_doc.equals("dvd")) {        
-            Dvd dvd = new Dvd(titulo, ejemplares, id, fecha_publi, productora, director);
-            System.out.println(dvd.toString());
-        }
-        else { 
-            Revista revista = new Revista(titulo, ejemplares, id, fecha_publi, editorial);
-            System.out.println(revista.toString());
-        }
+        if (!tipo_doc.equals("")) {
+            System.out.println("\n¿Estas seguro que lo quieres eliminar? (s/n)\n");
+            if (tipo_doc.equals("libro")) {
+                    Libro libro = new Libro(titulo, ejemplares, id, fecha_publi, editorial, autor);
+                    System.out.println(libro.toString());
+            }
+            else if(tipo_doc.equals("dvd")) {        
+                Dvd dvd = new Dvd(titulo, ejemplares, id, fecha_publi, productora, director);
+                System.out.println(dvd.toString());
+            }
+            else { 
+                Revista revista = new Revista(titulo, ejemplares, id, fecha_publi, editorial);
+                System.out.println(revista.toString());
+            }
 
-        String answer = terminal.nextLine();
-        switch(answer){
-            case "s":
-                this.sSQL = "DELETE FROM documentos WHERE identificador = ?";
-                try (PreparedStatement ps = this.conn.prepareStatement(sSQL)) {
-                    ps.setString(1, id);
-                    int filas = ps.executeUpdate();
-                    if (filas > 0) {
-                        res = true;
+            String answer = terminal.nextLine();
+            switch(answer){
+                case "s":
+                    this.sSQL = "DELETE FROM documentos WHERE identificador = ?";
+                    try (PreparedStatement ps = this.conn.prepareStatement(sSQL)) {
+                        ps.setString(1, id);
+                        int filas = ps.executeUpdate();
+                        if (filas > 0) {
+                            res = true;
+                        }
                     }
-                }
-                catch (SQLException e){
-                    System.err.println("Parece que no hay ningún documento con ese identificador.");
-                }
-            case "n":
-                System.out.println("Cancelando operación...");
-                break;
+                    catch (SQLException e){
+                        System.err.println("Parece que no hay ningún documento con ese identificador.");
+                    }
+                case "n":
+                    System.out.println("Cancelando operación...");
+                    break;
+            }
+        }
+        else {
+            System.out.println("\nParece que el identificador no esta en nuestra base de datos.");
         }
 
         return res;
