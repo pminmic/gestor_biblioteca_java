@@ -47,7 +47,7 @@ public class Dvd extends Documento{
         res += "Director: " + this.director + "\n";
         res += "Nº ejemplares: " + this.getEjemplares() + "\n";
         res += "ID: " + this.getIdentificador() + "\n";
-        res += "Fecha de publicación: " + this.getFechaPublicacion().toString() + "n";
+        res += "Fecha de publicación: " + this.getFechaPublicacion().toString() + "\n";
         res += "Productora: " + this.productora + "\n";
         return res;
     }

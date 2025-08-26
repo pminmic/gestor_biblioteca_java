@@ -46,7 +46,7 @@ public class Libro extends Documento {
         res += "Autor: " + this.autor + "\n";
         res += "Nº ejemplares: " + this.getEjemplares() + "\n";
         res += "ID: " + this.getIdentificador() + "\n";
-        res += "Fecha de publicación: " + this.getFechaPublicacion().toString() + "n";
+        res += "Fecha de publicación: " + this.getFechaPublicacion().toString() + "\n";
         res += "Editorial: " + this.editorial + "\n";
         return res;
     }

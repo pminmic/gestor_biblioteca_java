@@ -35,7 +35,7 @@ public class Revista extends Documento{
         res += "Titulo: " + this.getTitulo() + "\n";
         res += "Nº ejemplares: " + this.getEjemplares() + "\n";
         res += "ID: " + this.getIdentificador() + "\n";
-        res += "Fecha de publicación: " + this.getFechaPublicacion().toString() + "n";
+        res += "Fecha de publicación: " + this.getFechaPublicacion().toString() + "\n";
         res += "Editorial: " + this.editorial + "\n";
         return res;
     }
