@@ -43,6 +43,7 @@ public class BibliotecaService {
         while (!correct) {
             try {
                 opcion = terminal.nextInt();
+                terminal.nextLine();
                 if (opcion >= ini && opcion <= fin) {
                     correct = true;
                 }
@@ -66,6 +67,7 @@ public class BibliotecaService {
         while (!correct) {
             try {
                 opcion = terminal.nextInt();
+                terminal.nextLine();
                 if (opcion >= ini && opcion <= fin) {
                     correct = true;
                 }
