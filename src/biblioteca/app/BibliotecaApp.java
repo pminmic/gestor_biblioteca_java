@@ -171,9 +171,9 @@ public class BibliotecaApp {
                 System.out.println("4. Salir al menú normal");
                 int opcion = BibliotecaService.validarIntervalo(terminal, 1, 4);
 
+                DocumentoDao documentoDao = new DocumentoDao();
                 switch(opcion){
                     case 1:
-                        DocumentoDao documentoDao = new DocumentoDao();
                         if (documentoDao.insertarDocumento(terminal)) {
                             System.out.println("Perfecto! El documento ha sido añadido.");
                         }
@@ -183,6 +183,9 @@ public class BibliotecaApp {
                         superusuario();
                         break;
                     case 2:
+                        if (documentoDao.eliminarDocumento(terminal)) {
+                            System.out.println("Documento eliminado correctamente.");
+                        }
                         superusuario();
                         break;
                     case 3:

@@ -2,6 +2,7 @@ package biblioteca.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,6 +10,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 import biblioteca.utils.ConectarDB;
+import biblioteca.model.Libro;
+import biblioteca.model.Dvd;
+import biblioteca.model.Revista;
 
 public class DocumentoDao {
     // Instancias la clase que hemos creado anteriormente
@@ -97,6 +101,92 @@ public class DocumentoDao {
         }
 
         return res;
-    } 
+    }
+
+    public String buscarTipoPorID(String ID) {
+        String tipo_doc = "";
+        this.sSQL = "SELECT tipo_doc FROM documentos WHERE identificador = ?";
+        try (PreparedStatement ps = this.conn.prepareStatement(sSQL)) {
+            ps.setString(1, tipo_doc);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    tipo_doc = rs.getString("tipo_doc");
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("Ha habido un problema al connectarse a la base de datos.");
+        }
+        return tipo_doc;
+    }
+    
+    public boolean eliminarDocumento(Scanner terminal) {
+        boolean res = false;
+        System.out.println("\nPerfecto! ¿Cuál es el identificador del documento que quieres eliminar?");
+        String id = terminal.nextLine();
+        String tipo_doc = buscarTipoPorID(id);
+        String titulo = null;
+        int ejemplares = 0;
+        LocalDate fecha_publi = null;
+        String autor = null;
+        String director = null;
+        String editorial = null;
+        String productora = null;
+
+        this.sSQL = "SELECT * FROM documentos WHERE identificador = ?";
+        try (PreparedStatement ps = this.conn.prepareStatement(sSQL)) {
+            ps.setString(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    titulo = rs.getString("titulo");
+                    ejemplares = rs.getInt("ejemplares");
+                    Date fp = rs.getDate("fecha_publi");
+                    fecha_publi = fp.toLocalDate();
+                    autor = rs.getString("autor");
+                    director = rs.getString("director");
+                    editorial = rs.getString("editorial");
+                    productora = rs.getString("productora");
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("Ha habido un problema al connectarse a la base de datos.");
+        }
+        
+        System.out.println("\n¿Estas seguro que lo quieres eliminar? (s/n)\n");
+        if (tipo_doc.equals("libro")) {
+                Libro libro = new Libro(titulo, ejemplares, id, fecha_publi, editorial, autor);
+                System.out.println(libro.toString());
+        }
+        else if(tipo_doc.equals("dvd")) {        
+            Dvd dvd = new Dvd(titulo, ejemplares, id, fecha_publi, productora, director);
+            System.out.println(dvd.toString());
+        }
+        else { 
+            Revista revista = new Revista(titulo, ejemplares, id, fecha_publi, editorial);
+            System.out.println(revista.toString());
+        }
+
+        String answer = terminal.nextLine();
+        switch(answer){
+            case "s":
+                this.sSQL = "DELETE FROM documentos WHERE identificador = ?";
+                try (PreparedStatement ps = this.conn.prepareStatement(sSQL)) {
+                    ps.setString(1, id);
+                    int filas = ps.executeUpdate();
+                    if (filas > 0) {
+                        res = true;
+                    }
+                }
+                catch (SQLException e){
+                    System.err.println("Parece que no hay ningún documento con ese identificador.");
+                }
+            case "n":
+                System.out.println("Cancelando operación...");
+                break;
+        }
+
+        return res;
+    }
 
 }
